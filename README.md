@@ -56,11 +56,12 @@ LORA Café is a full-stack web application designed to provide a smooth online c
 
 ### Home Page
 
-![LORA Café Home Page](screenshots/home.png)
+![LORA Café Home Page](home.png)
+
 
 ### Discover LORA
 
-![Discover LORA - Coffee, Drinks and Desserts](screenshots/discover.png)
+![Discover LORA](discover.png)
 
 ---
 
