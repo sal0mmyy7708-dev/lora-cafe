@@ -1,0 +1,1804 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#30251f">
+  <title>LORA Café | Our Menu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --dark: #30251f;
+      --brown: #604832;
+      --cream: #f7f1e7;
+      --light: #fffdf9;
+      --gold: #a47d50;
+      --muted: #8b7968;
+      --border: #e9dfd1;
+      --success: #31845a;
+      --danger: #b33b45;
+      --shadow: 0 12px 35px rgba(48,37,31,.09);
+    }
+
+    body.dark-mode {
+      --dark: #eee4d8;
+      --brown: #d7b995;
+      --cream: #1e1916;
+      --light: #2b231e;
+      --gold: #d0a878;
+      --muted: #b8a99b;
+      --border: #493a30;
+      --success: #79c99c;
+      --danger: #e58b91;
+      --shadow: 0 12px 35px rgba(0,0,0,.2);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "DM Sans", Arial, sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      transition: background .2s, color .2s;
+    }
+
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { opacity: .6; cursor: wait; }
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      background: #30251f;
+      color: #f7f1e7;
+      padding: 20px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 27px;
+      letter-spacing: 4px;
+      font-weight: 700;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    nav a, nav button {
+      color: #eee2d3;
+      font-size: 13px;
+      background: none;
+      border: 0;
+    }
+
+    nav a:hover, nav a.current, nav button:hover {
+      color: #d9b88e;
+    }
+
+    .hero {
+      min-height: 310px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 65px 20px;
+      background:
+        linear-gradient(rgba(38,28,22,.70), rgba(38,28,22,.70)),
+        url("https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1600") center/cover;
+      color: white;
+    }
+
+    .eyebrow {
+      color: #e4c49c;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      font-size: 11px;
+      margin-bottom: 17px;
+    }
+
+    .hero h1 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(42px, 7vw, 65px);
+      letter-spacing: 3px;
+      font-weight: 600;
+    }
+
+    .hero p {
+      color: #eee2d3;
+      margin-top: 14px;
+      font-size: 15px;
+    }
+
+    .account-strip {
+      max-width: 1150px;
+      margin: 25px auto 0;
+      padding: 17px 22px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .account-strip strong { color: var(--gold); }
+    .account-strip p { color: var(--muted); font-size: 13px; }
+
+    .small-button {
+      border: 1px solid var(--border);
+      background: var(--cream);
+      color: var(--dark);
+      padding: 9px 13px;
+      border-radius: 7px;
+      font-size: 12px;
+    }
+
+    .menu-section {
+      max-width: 1250px;
+      margin: auto;
+      padding: 55px 24px 30px;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .section-heading span {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .section-heading h2 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 34px;
+      margin-top: 8px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0 20px;
+    }
+
+    #search {
+      width: min(100%, 470px);
+      padding: 15px 22px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--light);
+      outline: none;
+      color: var(--dark);
+    }
+
+    #search:focus { border-color: var(--gold); }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px 0 32px;
+    }
+
+    .filter-button {
+      padding: 10px 20px;
+      border: 1px solid #cbb99f;
+      border-radius: 30px;
+      background: transparent;
+      color: var(--brown);
+      font-size: 13px;
+    }
+
+    .filter-button:hover, .filter-button.active {
+      background: #30251f;
+      border-color: #30251f;
+      color: white;
+    }
+
+    .results-info {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 25px;
+    }
+
+    .item {
+      background: var(--light);
+      border-radius: 13px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .25s;
+    }
+
+    .item:hover { transform: translateY(-5px); }
+
+    .item-image {
+      height: 205px;
+      overflow: hidden;
+      background: var(--border);
+      position: relative;
+    }
+
+    .item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .4s;
+    }
+
+    .item:hover .item-image img { transform: scale(1.06); }
+
+    .favorite-button {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 39px;
+      height: 39px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255,253,249,.94);
+      color: #604832;
+      font-size: 21px;
+    }
+
+    .favorite-button.active { color: #b33b45; }
+
+    .details { padding: 20px; }
+
+    .category-label {
+      display: inline-block;
+      color: var(--gold);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      margin-bottom: 9px;
+    }
+
+    .details h3 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 21px;
+      margin-bottom: 9px;
+    }
+
+    .details p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      min-height: 43px;
+    }
+
+    .rating-summary {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .stars {
+      color: #d69d37;
+      letter-spacing: 2px;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .review-link {
+      border: 0;
+      background: transparent;
+      color: var(--gold);
+      font-size: 12px;
+      text-decoration: underline;
+      margin-top: 9px;
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .price {
+      color: var(--brown);
+      font-weight: 700;
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .add {
+      background: #30251f;
+      color: white;
+      border: 0;
+      border-radius: 7px;
+      padding: 11px 15px;
+      font-size: 12px;
+    }
+
+    .add:hover { background: var(--gold); }
+
+    .message, .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 35px 15px;
+      color: var(--muted);
+    }
+
+    .cart-button {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 5;
+      background: var(--gold);
+      color: white;
+      border: 0;
+      border-radius: 30px;
+      padding: 16px 23px;
+      font-weight: 700;
+      box-shadow: 0 7px 22px rgba(0,0,0,.2);
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.58);
+      z-index: 10;
+    }
+
+    .overlay.open { display: block; }
+
+    .cart-panel {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: min(480px, 100%);
+      background: var(--light);
+      color: var(--dark);
+      padding: 27px;
+      overflow-y: auto;
+    }
+
+    .cart-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 17px;
+      margin-bottom: 15px;
+    }
+
+    .cart-head h2, .checkout h3 {
+      font-family: "Playfair Display", Georgia, serif;
+    }
+
+    .cart-head h2 { font-size: 27px; }
+
+    .close {
+      border: 0;
+      background: transparent;
+      color: var(--dark);
+      font-size: 30px;
+      padding: 0 8px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      padding: 17px 0;
+      font-size: 13px;
+    }
+
+    .cart-item strong { color: var(--brown); }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .quantity button {
+      border: 1px solid var(--border);
+      background: var(--cream);
+      border-radius: 5px;
+      padding: 5px 10px;
+      color: var(--dark);
+    }
+
+    .quantity .remove { color: #b33b45; }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 10px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .summary-line.final {
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 19px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .discount-line { color: var(--success); }
+
+    .checkout h3 {
+      font-size: 22px;
+      margin: 24px 0 16px;
+    }
+
+    .checkout label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 13px 0 7px;
+    }
+
+    .checkout input, .checkout textarea, .checkout select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--cream);
+      outline: none;
+      color: var(--dark);
+    }
+
+    .checkout textarea {
+      min-height: 75px;
+      resize: vertical;
+    }
+
+    .coupon-row { display: flex; gap: 8px; }
+    .coupon-row input { min-width: 0; }
+
+    .coupon-row button {
+      border: 0;
+      border-radius: 7px;
+      padding: 0 13px;
+      background: var(--gold);
+      color: white;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .points-box {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 13px;
+      margin-top: 15px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .points-box label {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0;
+    }
+
+    .points-box input { width: auto; }
+
+    .full {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 7px;
+      margin-top: 17px;
+      background: #30251f;
+      color: white;
+      font-weight: 700;
+    }
+
+    .full:hover { background: var(--gold); }
+    .full:disabled { opacity: .6; cursor: wait; }
+
+    #checkoutMessage, .feedback {
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 12px;
+      color: var(--muted);
+    }
+
+    .orders-section {
+      max-width: 1100px;
+      margin: 35px auto;
+      padding: 25px;
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .orders-section h2 {
+      font-family: "Playfair Display", Georgia, serif;
+      margin-bottom: 15px;
+    }
+
+    .order-card {
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .order-status {
+      color: var(--gold);
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+
+    .order-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .review-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgba(0,0,0,.65);
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .review-overlay.open {
+      display: grid;
+      place-items: center;
+    }
+
+    .review-panel {
+      width: min(650px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--light);
+      color: var(--dark);
+      border-radius: 13px;
+      padding: 25px;
+      box-shadow: var(--shadow);
+    }
+
+    .review-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 15px;
+    }
+
+    .review-head h2 {
+      font-family: "Playfair Display", Georgia, serif;
+    }
+
+    .review-entry {
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .review-entry p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin-top: 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .review-meta {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .verified {
+      color: var(--success);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .review-form {
+      border-top: 1px solid var(--border);
+      margin-top: 20px;
+      padding-top: 18px;
+    }
+
+    .review-form label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin: 12px 0 7px;
+    }
+
+    .review-form select,
+    .review-form textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--cream);
+      color: var(--dark);
+    }
+
+    .review-form textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .review-form button {
+      border: 0;
+      background: #30251f;
+      color: white;
+      border-radius: 7px;
+      padding: 12px 17px;
+      margin-top: 12px;
+    }
+
+    .review-form button:hover { background: var(--gold); }
+
+    footer {
+      background: #30251f;
+      color: #eee2d3;
+      text-align: center;
+      padding: 32px 20px;
+      margin-top: 65px;
+    }
+
+    footer strong {
+      font-family: "Playfair Display", Georgia, serif;
+      letter-spacing: 3px;
+      font-size: 19px;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: #cbb9a5;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 650px) {
+      header { justify-content: center; text-align: center; padding: 18px 14px; }
+      nav { justify-content: center; gap: 13px; }
+      .hero { min-height: 250px; }
+      .menu-section { padding: 40px 16px 20px; }
+      .menu { grid-template-columns: 1fr; gap: 17px; }
+      .account-strip { margin: 18px 12px 0; }
+      .cart-button { right: 15px; bottom: 15px; }
+      .orders-section { margin: 25px 12px; padding: 18px; }
+      .cart-panel { padding: 20px 16px; }
+      .review-panel { padding: 18px; }
+      .bottom { align-items: stretch; }
+      .add { flex: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="logo">LORA CAFÉ</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="menu.html" class="current">Menu</a>
+    <a href="booking.html">Booking</a>
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+    <a href="#myOrders">My Orders</a>
+    <button type="button" onclick="toggleTheme()" id="themeButton">☾ Dark</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">Taste the difference</div>
+    <h1>OUR MENU</h1>
+    <p>Carefully crafted moments, served with love.</p>
+  </div>
+</section>
+
+<div class="account-strip">
+  <div>
+    <p id="welcomeText">Welcome to LORA Café!</p>
+    <p>Your loyalty balance: <strong id="pointsBalance">Login to view points</strong></p>
+  </div>
+  <button class="small-button" type="button" onclick="loadOrders()">View My Orders</button>
+</div>
+
+<main class="menu-section">
+  <div class="section-heading">
+    <span>Made with passion</span>
+    <h2>Explore Our Menu</h2>
+    <p>Discover your next favorite taste at LORA Café.</p>
+  </div>
+
+  <div class="controls">
+    <input id="search" type="search"
+      placeholder="Search your favorite food or drink..."
+      aria-label="Search menu">
+  </div>
+
+  <div class="filters">
+    <button class="filter-button active" data-category="all">All</button>
+    <button class="filter-button" data-category="coffee">Coffee</button>
+    <button class="filter-button" data-category="drinks">Drinks</button>
+    <button class="filter-button" data-category="food">Food</button>
+    <button class="filter-button" data-category="desserts">Desserts</button>
+    <button class="filter-button" data-category="favorites">♥ Favorites</button>
+  </div>
+
+  <p class="results-info" id="resultsInfo">Loading products...</p>
+  <div class="menu" id="menu">
+    <p class="message">Loading our menu...</p>
+  </div>
+</main>
+
+<section class="orders-section" id="myOrders">
+  <h2>My Recent Orders</h2>
+  <p class="feedback" id="ordersMessage">Login to view your order history and tracking updates.</p>
+  <div id="ordersList"></div>
+</section>
+
+<button class="cart-button" type="button" onclick="openCart()">
+  My Cart (<span id="cartCount">0</span>)
+</button>
+
+<div class="overlay" id="overlay" onclick="outsideClose(event)">
+  <section class="cart-panel" role="dialog" aria-modal="true" aria-label="Shopping cart">
+
+    <div class="cart-head">
+      <h2>Your Cart</h2>
+      <button class="close" type="button" onclick="closeCart()" aria-label="Close cart">×</button>
+    </div>
+
+    <div id="cartItems">
+      <p class="empty">Your cart is empty.</p>
+    </div>
+
+    <div class="summary-line">
+      <span>Subtotal</span>
+      <span id="cartSubtotal">0.00 EGP</span>
+    </div>
+
+    <div class="summary-line discount-line">
+      <span>Coupon discount</span>
+      <span id="couponDiscount">0.00 EGP</span>
+    </div>
+
+    <div class="summary-line discount-line">
+      <span>Points discount</span>
+      <span id="pointsDiscount">0.00 EGP</span>
+    </div>
+
+    <div class="summary-line final">
+      <span>Total</span>
+      <span id="cartTotal">0.00 EGP</span>
+    </div>
+
+    <form id="checkoutForm" class="checkout">
+      <h3>Checkout Details</h3>
+
+      <label for="fulfillmentType">Order Type</label>
+      <select id="fulfillmentType">
+        <option value="delivery">Delivery</option>
+        <option value="pickup">Pickup from café</option>
+      </select>
+
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" required maxlength="30" placeholder="Your phone number">
+
+      <div id="addressGroup">
+        <label for="address">Delivery Address</label>
+        <textarea id="address" maxlength="300" placeholder="Your full delivery address"></textarea>
+      </div>
+
+      <label for="notes">Order Notes (optional)</label>
+      <textarea id="notes" maxlength="500" placeholder="Any special instructions?"></textarea>
+
+      <label for="couponCode">Coupon Code</label>
+      <div class="coupon-row">
+        <input id="couponCode" type="text" maxlength="50" placeholder="Enter coupon code">
+        <button type="button" onclick="applyCoupon()">Apply</button>
+      </div>
+      <p id="couponMessage" class="feedback"></p>
+
+      <div class="points-box">
+        <label>
+          <input type="checkbox" id="usePoints" onchange="updateCart()">
+          <span>Use my available points for a discount</span>
+        </label>
+        <p id="pointsInfo" style="margin-top:8px">10 points = 1 EGP</p>
+      </div>
+
+      <button class="full" type="submit">Place Order</button>
+      <p id="checkoutMessage" role="status"></p>
+    </form>
+  </section>
+</div>
+
+<div class="review-overlay" id="reviewOverlay" onclick="closeReviewOutside(event)">
+  <section class="review-panel" role="dialog" aria-modal="true" aria-label="Product reviews">
+    <div class="review-head">
+      <h2 id="reviewProductName">Product Reviews</h2>
+      <button class="close" type="button" onclick="closeReviews()" aria-label="Close reviews">×</button>
+    </div>
+
+    <div id="reviewsList">
+      <p class="feedback">Loading reviews...</p>
+    </div>
+
+    <form class="review-form" id="reviewForm">
+      <h3>Write a Review</h3>
+      <p class="feedback" id="reviewPermission">
+        Login and complete an order containing this product to submit a verified review.
+      </p>
+
+      <label for="reviewRating">Your Rating</label>
+      <select id="reviewRating" required>
+        <option value="5">★★★★★ - Excellent</option>
+        <option value="4">★★★★ - Very Good</option>
+        <option value="3">★★★ - Good</option>
+        <option value="2">★★ - Fair</option>
+        <option value="1">★ - Poor</option>
+      </select>
+
+      <label for="reviewComment">Your Review</label>
+      <textarea id="reviewComment" maxlength="1000" required
+        placeholder="Share your experience with this product..."></textarea>
+
+      <button type="submit" id="submitReviewButton">Submit Review</button>
+      <p class="feedback" id="reviewMessage" role="status"></p>
+    </form>
+  </section>
+</div>
+
+<footer>
+  <strong>LORA CAFÉ</strong>
+  <p>A little luxury in every moment.</p>
+  <p>© 2026 LORA Café. All rights reserved.</p>
+</footer>
+
+<script>
+  let products = [];
+  let cart = {};
+  let selectedCategory = "all";
+  let favorites = new Set();
+  let currentUser = null;
+  let availablePoints = 0;
+  let appliedCoupon = null;
+  let couponDiscountValue = 0;
+  let activeReviewProductId = null;
+
+  const menuElement = document.getElementById("menu");
+  const searchElement = document.getElementById("search");
+  const resultsInfo = document.getElementById("resultsInfo");
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  function formatPrice(price) {
+    return Number(price || 0).toFixed(2) + " EGP";
+  }
+
+  function formatDate(value) {
+    if (!value) return "Date unavailable";
+    return escapeHTML(value);
+  }
+
+  async function readApiResponse(response, endpoint) {
+    const responseText = await response.text();
+
+    try {
+      return JSON.parse(responseText);
+    } catch {
+      console.error("Invalid API response:", {
+        endpoint,
+        status: response.status,
+        response: responseText.slice(0, 300)
+      });
+
+      throw new Error(
+        `The server returned an invalid response for ${endpoint}. HTTP ${response.status}. Check the server route.`
+      );
+    }
+  }
+
+  function getSubtotal() {
+    return Object.entries(cart).reduce((sum, [id, quantity]) => {
+      const product = products.find(p => Number(p.id) === Number(id));
+      return sum + (product ? Number(product.price) * quantity : 0);
+    }, 0);
+  }
+
+  function saveCart() {
+    localStorage.setItem("loraCafeCart", JSON.stringify(cart));
+  }
+
+  function restoreCart() {
+    try {
+      const saved = JSON.parse(localStorage.getItem("loraCafeCart") || "{}");
+
+      if (saved && typeof saved === "object" && !Array.isArray(saved)) {
+        cart = {};
+
+        for (const [id, quantity] of Object.entries(saved)) {
+          const productId = Number(id);
+          const amount = Number(quantity);
+
+          if (
+            Number.isInteger(productId) &&
+            Number.isInteger(amount) &&
+            amount > 0 &&
+            amount <= 20
+          ) {
+            cart[productId] = amount;
+          }
+        }
+      }
+    } catch {
+      cart = {};
+    }
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle("dark-mode");
+
+    const isDark = document.body.classList.contains("dark-mode");
+
+    localStorage.setItem("loraCafeTheme", isDark ? "dark" : "light");
+    document.getElementById("themeButton").textContent =
+      isDark ? "☀ Light" : "☾ Dark";
+  }
+
+  function restoreTheme() {
+    const isDark = localStorage.getItem("loraCafeTheme") === "dark";
+
+    document.body.classList.toggle("dark-mode", isDark);
+    document.getElementById("themeButton").textContent =
+      isDark ? "☀ Light" : "☾ Dark";
+  }
+
+  function updateFulfillmentFields() {
+    const type = document.getElementById("fulfillmentType").value;
+    const address = document.getElementById("address");
+    const group = document.getElementById("addressGroup");
+
+    const isDelivery = type === "delivery";
+
+    group.style.display = isDelivery ? "block" : "none";
+    address.required = isDelivery;
+
+    if (!isDelivery) address.value = "";
+  }
+
+  async function loadCurrentUser() {
+    try {
+      const response = await fetch("/api/auth/me");
+      const data = await readApiResponse(response, "/api/auth/me");
+
+      currentUser = data.user || null;
+
+      if (currentUser) {
+        document.getElementById("welcomeText").textContent =
+          "Welcome back, " + currentUser.name + "!";
+
+        await Promise.all([
+          loadFavorites(),
+          loadLoyalty()
+        ]);
+
+        await loadOrders();
+      } else {
+        document.getElementById("welcomeText").textContent =
+          "Welcome to LORA Café! Login to access your account features.";
+
+        document.getElementById("pointsBalance").textContent =
+          "Login to view points";
+        availablePoints = 0;
+        favorites.clear();
+      }
+
+      displayProducts();
+    } catch (error) {
+      console.error("Account loading error:", error);
+      document.getElementById("welcomeText").textContent =
+        "Welcome to LORA Café!";
+    }
+  }
+
+  async function loadLoyalty() {
+    if (!currentUser) return;
+
+    try {
+      const response = await fetch("/api/loyalty");
+      const data = await readApiResponse(response, "/api/loyalty");
+
+      if (response.ok && data.success) {
+        availablePoints = Number(data.points || 0);
+
+        document.getElementById("pointsBalance").textContent =
+          availablePoints + " points";
+
+        document.getElementById("pointsInfo").textContent =
+          "You have " + availablePoints + " points. 10 points = 1 EGP.";
+
+        updateCart();
+      }
+    } catch (error) {
+      console.error("Loyalty loading error:", error);
+    }
+  }
+
+  async function loadProducts() {
+    try {
+      const response = await fetch("/api/products");
+      const data = await readApiResponse(response, "/api/products");
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Could not load menu.");
+      }
+
+      products = Array.isArray(data.products) ? data.products : [];
+
+      restoreCart();
+      updateCart();
+      displayProducts();
+
+    } catch (error) {
+      console.error("Products loading error:", error);
+      menuElement.innerHTML =
+        `<p class="message">${escapeHTML(error.message)}</p>`;
+      resultsInfo.textContent = "Menu unavailable";
+    }
+  }
+
+  function renderStars(value) {
+    const rating = Math.max(0, Math.min(5, Number(value || 0)));
+    const rounded = Math.round(rating);
+
+    return "★".repeat(rounded) + "☆".repeat(5 - rounded);
+  }
+
+  function displayProducts() {
+    const term = searchElement.value.trim().toLowerCase();
+
+    const filtered = products.filter(product => {
+      const matchesCategory =
+        selectedCategory === "all" ||
+        (selectedCategory === "favorites"
+          ? favorites.has(Number(product.id))
+          : product.category === selectedCategory);
+
+      const matchesSearch =
+        String(product.name || "").toLowerCase().includes(term) ||
+        String(product.description || "").toLowerCase().includes(term);
+
+      return matchesCategory && matchesSearch;
+    });
+
+    resultsInfo.textContent =
+      `Showing ${filtered.length} of ${products.length} products`;
+
+    if (!filtered.length) {
+      menuElement.innerHTML =
+        '<p class="empty">No products found. Try another search.</p>';
+      return;
+    }
+
+    menuElement.innerHTML = filtered.map(product => {
+      const image = product.image ||
+        "https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600";
+
+      const isFavorite = favorites.has(Number(product.id));
+      const rating = Number(product.average_rating || 0);
+      const reviewCount = Number(product.review_count || 0);
+
+      return `
+        <article class="item">
+          <div class="item-image">
+            <img
+              src="${escapeHTML(image)}"
+              alt="${escapeHTML(product.name)}"
+              loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600'"
+            >
+
+            <button
+              class="favorite-button ${isFavorite ? "active" : ""}"
+              type="button"
+              onclick="toggleFavorite(${Number(product.id)})"
+              aria-label="Toggle favorite"
+              title="Add to favorites"
+            >${isFavorite ? "♥" : "♡"}</button>
+          </div>
+
+          <div class="details">
+            <span class="category-label">${escapeHTML(product.category)}</span>
+            <h3>${escapeHTML(product.name)}</h3>
+            <p>${escapeHTML(product.description)}</p>
+
+            <div class="rating-summary">
+              <span class="stars">${renderStars(rating)}</span>
+              <strong>${rating.toFixed(1)}</strong>
+              <span>(${reviewCount} reviews)</span>
+            </div>
+
+            <button class="review-link" type="button"
+              onclick="openReviews(${Number(product.id)})">
+              Read reviews / Write a review
+            </button>
+
+            <div class="bottom">
+              <span class="price">${formatPrice(product.price)}</span>
+              <button class="add" type="button"
+                onclick="addToCart(${Number(product.id)})">
+                Add to Cart +
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  async function loadFavorites() {
+    if (!currentUser) return;
+
+    try {
+      const response = await fetch("/api/favorites");
+      const data = await readApiResponse(response, "/api/favorites");
+
+      if (response.ok && data.success) {
+        favorites = new Set(
+          (data.favorites || []).map(product => Number(product.id))
+        );
+      }
+    } catch (error) {
+      console.error("Favorites error:", error);
+    }
+  }
+
+  async function toggleFavorite(id) {
+    if (!currentUser) {
+      alert("Please login to use favorites.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    const isFavorite = favorites.has(Number(id));
+
+    try {
+      const response = await fetch(
+        isFavorite ? `/api/favorites/${id}` : "/api/favorites",
+        {
+          method: isFavorite ? "DELETE" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: isFavorite ? undefined : JSON.stringify({ productId: id })
+        }
+      );
+
+      const data = await readApiResponse(
+        response,
+        isFavorite ? `/api/favorites/${id}` : "/api/favorites"
+      );
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Could not update favorites.");
+      }
+
+      if (isFavorite) {
+        favorites.delete(Number(id));
+      } else {
+        favorites.add(Number(id));
+      }
+
+      displayProducts();
+
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+  function addToCart(id) {
+    const product = products.find(item => Number(item.id) === Number(id));
+    if (!product) return;
+
+    if (!cart[id]) cart[id] = 0;
+
+    if (cart[id] >= 20) {
+      alert("Maximum quantity is 20.");
+      return;
+    }
+
+    cart[id]++;
+    clearAppliedCoupon();
+    saveCart();
+    updateCart();
+  }
+
+  function changeQuantity(id, amount) {
+    if (!cart[id]) return;
+
+    cart[id] += amount;
+
+    if (cart[id] <= 0) {
+      delete cart[id];
+    }
+
+    clearAppliedCoupon();
+    saveCart();
+    updateCart();
+  }
+
+  function clearAppliedCoupon() {
+    appliedCoupon = null;
+    couponDiscountValue = 0;
+    document.getElementById("couponMessage").textContent = "";
+  }
+
+  function getPointsToRedeem(subtotal) {
+    if (!currentUser || !document.getElementById("usePoints").checked) {
+      return 0;
+    }
+
+    return Math.min(availablePoints, Math.floor(subtotal * 10));
+  }
+
+  function updateCart() {
+    const cartItems = document.getElementById("cartItems");
+    const ids = Object.keys(cart);
+
+    let count = 0;
+
+    if (!ids.length) {
+      cartItems.innerHTML =
+        '<p class="empty">Your cart is empty.</p>';
+    } else {
+      cartItems.innerHTML = ids.map(id => {
+        const product = products.find(
+          p => Number(p.id) === Number(id)
+        );
+
+        if (!product) return "";
+
+        const quantity = cart[id];
+        const subtotal = Number(product.price) * quantity;
+        count += quantity;
+
+        return `
+          <div class="cart-item">
+            <div>
+              <strong>${escapeHTML(product.name)}</strong>
+              <div>${formatPrice(product.price)} each</div>
+
+              <div class="quantity">
+                <button type="button"
+                  onclick="changeQuantity(${Number(id)}, -1)">−</button>
+                <span>${quantity}</span>
+                <button type="button"
+                  onclick="changeQuantity(${Number(id)}, 1)">+</button>
+                <button type="button" class="remove"
+                  onclick="changeQuantity(${Number(id)}, -${quantity})">Remove</button>
+              </div>
+            </div>
+            <strong>${formatPrice(subtotal)}</strong>
+          </div>
+        `;
+      }).join("");
+    }
+
+    const subtotal = getSubtotal();
+    const points = getPointsToRedeem(subtotal);
+    const pointsDiscount = points / 10;
+
+    const safeCouponDiscount = Math.min(
+      couponDiscountValue,
+      Math.max(0, subtotal - pointsDiscount)
+    );
+
+    const total = Math.max(
+      0,
+      subtotal - safeCouponDiscount - pointsDiscount
+    );
+
+    document.getElementById("cartCount").textContent = count;
+    document.getElementById("cartSubtotal").textContent = formatPrice(subtotal);
+    document.getElementById("couponDiscount").textContent = formatPrice(safeCouponDiscount);
+    document.getElementById("pointsDiscount").textContent = formatPrice(pointsDiscount);
+    document.getElementById("cartTotal").textContent = formatPrice(total);
+  }
+
+  function openCart() {
+    document.getElementById("overlay").classList.add("open");
+    document.body.style.overflow = "hidden";
+    updateCart();
+  }
+
+  function closeCart() {
+    document.getElementById("overlay").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  function outsideClose(event) {
+    if (event.target.id === "overlay") closeCart();
+  }
+
+  async function applyCoupon() {
+    const message = document.getElementById("couponMessage");
+    const code = document.getElementById("couponCode").value.trim();
+    const subtotal = getSubtotal();
+
+    if (!currentUser) {
+      message.textContent = "Please login to use coupons.";
+      return;
+    }
+
+    if (!code) {
+      message.textContent = "Enter a coupon code first.";
+      return;
+    }
+
+    if (subtotal <= 0) {
+      message.textContent = "Add products to your cart first.";
+      return;
+    }
+
+    message.textContent = "Checking coupon...";
+
+    try {
+      const response = await fetch("/api/coupons/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, subtotal })
+      });
+
+      const data = await readApiResponse(
+        response,
+        "/api/coupons/validate"
+      );
+
+      if (!response.ok || !data.success) {
+        appliedCoupon = null;
+        couponDiscountValue = 0;
+        updateCart();
+        throw new Error(data.message || "Invalid coupon.");
+      }
+
+      appliedCoupon = data.code;
+      couponDiscountValue = Number(data.discount || 0);
+
+      message.textContent =
+        `Coupon ${data.code} applied. You save ${formatPrice(couponDiscountValue)}.`;
+
+      updateCart();
+
+    } catch (error) {
+      message.textContent = error.message;
+    }
+  }
+
+  async function loadOrders() {
+    const message = document.getElementById("ordersMessage");
+    const list = document.getElementById("ordersList");
+
+    if (!currentUser) {
+      message.textContent = "Please login to view your orders.";
+      list.innerHTML = "";
+      return;
+    }
+
+    message.textContent = "Loading your orders...";
+
+    try {
+      const response = await fetch("/api/orders/my");
+      const data = await readApiResponse(response, "/api/orders/my");
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Could not load orders.");
+      }
+
+      if (!Array.isArray(data.orders) || !data.orders.length) {
+        message.textContent = "You have not placed any orders yet.";
+        list.innerHTML = "";
+        return;
+      }
+
+      message.textContent = "Here are your latest orders.";
+
+      list.innerHTML = data.orders.map(order => {
+        const itemText = (order.items || []).map(item =>
+          `${escapeHTML(item.product_name)} × ${Number(item.quantity)}`
+        ).join(", ");
+
+        return `
+          <article class="order-card">
+            <div class="order-top">
+              <strong>Order #${Number(order.id)}</strong>
+              <span class="order-status">${escapeHTML(order.status)}</span>
+            </div>
+            <p>${itemText}</p>
+            <p>Total: <strong>${formatPrice(order.total)}</strong></p>
+            <p>Placed: ${formatDate(order.created_at)}</p>
+            <p>Fulfillment: ${escapeHTML(order.fulfillment_type || "delivery")}</p>
+            ${order.tracking_code
+              ? `<p>Tracking code: <strong>${escapeHTML(order.tracking_code)}</strong></p>`
+              : ""}
+            ${Number(order.discount) > 0
+              ? `<p>Discount: ${formatPrice(order.discount)}</p>`
+              : ""}
+          </article>
+        `;
+      }).join("");
+
+    } catch (error) {
+      console.error("Orders loading error:", error);
+      message.textContent = error.message;
+    }
+  }
+
+  // ========================================
+  // Product reviews
+  // ========================================
+
+  async function openReviews(productId) {
+    const product = products.find(p => Number(p.id) === Number(productId));
+    if (!product) return;
+
+    activeReviewProductId = Number(productId);
+
+    document.getElementById("reviewProductName").textContent =
+      product.name + " Reviews";
+
+    document.getElementById("reviewMessage").textContent = "";
+    document.getElementById("reviewComment").value = "";
+
+    document.getElementById("reviewOverlay").classList.add("open");
+    document.body.style.overflow = "hidden";
+
+    const permission = document.getElementById("reviewPermission");
+
+    permission.textContent = currentUser
+      ? "You can submit a review after completing an order containing this product."
+      : "Please login and complete an order containing this product before reviewing.";
+
+    await loadProductReviews(productId);
+  }
+
+  async function loadProductReviews(productId) {
+    const list = document.getElementById("reviewsList");
+
+    list.innerHTML = '<p class="feedback">Loading reviews...</p>';
+
+    try {
+      const endpoint = `/api/products/${productId}/reviews`;
+      const response = await fetch(endpoint);
+      const data = await readApiResponse(response, endpoint);
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Could not load reviews.");
+      }
+
+      const summary = data.summary || {};
+      const average = Number(summary.average_rating || 0);
+      const count = Number(summary.review_count || 0);
+
+      const summaryHTML = `
+        <div class="rating-summary">
+          <span class="stars">${renderStars(average)}</span>
+          <strong>${average.toFixed(1)} / 5</strong>
+          <span>${count} reviews</span>
+        </div>
+      `;
+
+      const reviews = Array.isArray(data.reviews) ? data.reviews : [];
+
+      if (!reviews.length) {
+        list.innerHTML = summaryHTML +
+          '<p class="feedback">No reviews yet. Be the first to share your experience after a completed purchase.</p>';
+        return;
+      }
+
+      list.innerHTML = summaryHTML + reviews.map(review => `
+        <article class="review-entry">
+          <div class="review-meta">
+            <strong>${escapeHTML(review.customer_name || "Customer")}</strong>
+            <span class="stars">${renderStars(review.rating)}</span>
+          </div>
+          <p>${escapeHTML(review.comment)}</p>
+          <div class="review-meta" style="margin-top:9px">
+            <span class="verified">
+              ${Number(review.is_verified) === 1 ? "✓ Verified purchase" : ""}
+            </span>
+            <span class="feedback">${formatDate(review.created_at)}</span>
+          </div>
+        </article>
+      `).join("");
+
+    } catch (error) {
+      console.error("Review loading error:", error);
+      list.innerHTML =
+        `<p class="feedback">${escapeHTML(error.message)}</p>`;
+    }
+  }
+
+  async function submitReview(event) {
+    event.preventDefault();
+
+    const message = document.getElementById("reviewMessage");
+    const button = document.getElementById("submitReviewButton");
+
+    if (!currentUser) {
+      message.textContent = "Please login before submitting a review.";
+      return;
+    }
+
+    if (!activeReviewProductId) {
+      message.textContent = "Please select a product first.";
+      return;
+    }
+
+    const rating = Number(document.getElementById("reviewRating").value);
+    const comment = document.getElementById("reviewComment").value.trim();
+
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5 || !comment) {
+      message.textContent = "Choose a rating and write your review.";
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Submitting...";
+    message.textContent = "";
+
+    try {
+      const response = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: activeReviewProductId,
+          rating,
+          comment
+        })
+      });
+
+      const data = await readApiResponse(response, "/api/reviews");
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Could not submit review.");
+      }
+
+      message.textContent = "Your verified review was submitted successfully!";
+      document.getElementById("reviewComment").value = "";
+
+      await loadProductReviews(activeReviewProductId);
+      await loadProducts();
+
+    } catch (error) {
+      message.textContent = error.message;
+    } finally {
+      button.disabled = false;
+      button.textContent = "Submit Review";
+    }
+  }
+
+  function closeReviews() {
+    document.getElementById("reviewOverlay").classList.remove("open");
+    document.body.style.overflow = "";
+    activeReviewProductId = null;
+  }
+
+  function closeReviewOutside(event) {
+    if (event.target.id === "reviewOverlay") closeReviews();
+  }
+
+  // ========================================
+  // Checkout
+  // ========================================
+
+  document.getElementById("checkoutForm").addEventListener(
+    "submit",
+    async event => {
+      event.preventDefault();
+
+      const message = document.getElementById("checkoutMessage");
+      const button = event.target.querySelector('button[type="submit"]');
+
+      const items = Object.entries(cart).map(
+        ([productId, quantity]) => ({
+          productId: Number(productId),
+          quantity
+        })
+      );
+
+      if (!items.length) {
+        message.textContent = "Please add products to your cart first.";
+        return;
+      }
+
+      if (!currentUser) {
+        message.textContent = "Please login before placing an order.";
+        return;
+      }
+
+      const fulfillmentType =
+        document.getElementById("fulfillmentType").value;
+
+      const address =
+        document.getElementById("address").value.trim();
+
+      if (fulfillmentType === "delivery" && !address) {
+        message.textContent = "Please enter your delivery address.";
+        return;
+      }
+
+      const subtotal = getSubtotal();
+      const redeemPoints = getPointsToRedeem(subtotal);
+
+      button.disabled = true;
+      button.textContent = "Processing...";
+      message.textContent = "";
+
+      try {
+        const response = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items,
+            phone: document.getElementById("phone").value.trim(),
+            address,
+            notes: document.getElementById("notes").value.trim(),
+            couponCode: appliedCoupon || "",
+            redeemPoints,
+            fulfillmentType,
+            paymentMethod: "cash"
+          })
+        });
+
+        const data = await readApiResponse(response, "/api/orders");
+
+        if (response.status === 401) {
+          message.textContent = "Please login before placing an order.";
+          return;
+        }
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Order failed.");
+        }
+
+        cart = {};
+        saveCart();
+        clearAppliedCoupon();
+
+        document.getElementById("couponCode").value = "";
+        document.getElementById("usePoints").checked = false;
+
+        updateCart();
+        event.target.reset();
+        updateFulfillmentFields();
+
+        message.textContent =
+          `Order confirmed! Order #${data.orderId}. Total: ${formatPrice(data.total)}. You earned ${data.earnedPoints} points!`;
+
+        await loadLoyalty();
+        await loadOrders();
+
+      } catch (error) {
+        console.error("Checkout error:", error);
+        message.textContent = error.message;
+
+      } finally {
+        button.disabled = false;
+        button.textContent = "Place Order";
+      }
+    }
+  );
+
+  document.getElementById("reviewForm").addEventListener(
+    "submit",
+    submitReview
+  );
+
+  document.getElementById("fulfillmentType").addEventListener(
+    "change",
+    updateFulfillmentFields
+  );
+
+  // ========================================
+  // Filters and keyboard controls
+  // ========================================
+
+  document.querySelectorAll(".filter-button").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".filter-button").forEach(item => {
+        item.classList.remove("active");
+      });
+
+      button.classList.add("active");
+      selectedCategory = button.dataset.category;
+      displayProducts();
+    });
+  });
+
+  searchElement.addEventListener("input", displayProducts);
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeCart();
+      closeReviews();
+    }
+  });
+
+  // ========================================
+  // Start page
+  // ========================================
+
+  async function startPage() {
+    restoreTheme();
+    updateFulfillmentFields();
+    await loadProducts();
+    await loadCurrentUser();
+    updateCart();
+  }
+
+  startPage();
+</script>
+
+</body>
+</html>

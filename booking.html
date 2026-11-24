@@ -1,0 +1,570 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#30251f">
+  <title>Reserve a Table | LORA Café</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --dark: #30251f;
+      --brown: #604832;
+      --cream: #f7f1e7;
+      --white: #fffdf9;
+      --gold: #a47d50;
+      --muted: #8b7968;
+      --border: #e9dfd1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      background: var(--dark);
+      color: var(--white);
+      padding: 20px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 27px;
+      letter-spacing: 4px;
+      font-weight: 700;
+    }
+
+    nav {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      font-size: 13px;
+      color: #eee2d3;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #d9b88e;
+    }
+
+    .hero {
+      min-height: 270px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 50px 20px;
+      color: white;
+      background:
+        linear-gradient(rgba(38,28,22,.65), rgba(38,28,22,.72)),
+        url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600") center/cover;
+    }
+
+    .eyebrow {
+      color: #dfbd91;
+      letter-spacing: 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(38px, 6vw, 58px);
+      font-weight: 600;
+    }
+
+    .hero p {
+      margin-top: 13px;
+      color: #eee2d3;
+      font-size: 14px;
+    }
+
+    .booking-page {
+      padding: 65px 20px 80px;
+    }
+
+    .booking-layout {
+      max-width: 1050px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      background: var(--white);
+      border: 1px solid var(--border);
+      box-shadow: 0 15px 45px rgba(48,37,31,.09);
+    }
+
+    .booking-info {
+      background: var(--dark);
+      color: var(--white);
+      padding: 45px 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .booking-info .eyebrow {
+      color: #d9b88e;
+    }
+
+    .booking-info h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 33px;
+      line-height: 1.3;
+      margin-bottom: 17px;
+    }
+
+    .booking-info > p {
+      color: #d7c8b8;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .info-divider {
+      height: 1px;
+      background: rgba(255,255,255,.17);
+      margin: 28px 0;
+    }
+
+    .info-point {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+
+    .info-icon {
+      color: #d9b88e;
+      font-size: 20px;
+    }
+
+    .info-point strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .info-point span:last-child {
+      font-size: 12px;
+      color: #d7c8b8;
+      line-height: 1.6;
+    }
+
+    .booking-card {
+      padding: 45px;
+    }
+
+    .booking-card h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .booking-description {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+
+    .booking-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 19px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 14px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      outline: none;
+      color: var(--dark);
+      font-size: 13px;
+      transition: border .2s, box-shadow .2s;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(164,125,80,.10);
+    }
+
+    .booking-form button {
+      grid-column: 1 / -1;
+      border: 0;
+      padding: 16px;
+      background: var(--dark);
+      color: white;
+      font-weight: 700;
+      letter-spacing: .5px;
+      border-radius: 5px;
+      transition: background .2s;
+    }
+
+    .booking-form button:hover {
+      background: var(--gold);
+    }
+
+    .booking-form button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #bookingMessage {
+      grid-column: 1 / -1;
+      font-size: 13px;
+      line-height: 1.7;
+      padding: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 23px;
+      font-size: 12px;
+      color: var(--brown);
+    }
+
+    .back-link:hover {
+      color: var(--gold);
+    }
+
+    footer {
+      background: var(--dark);
+      color: #eee2d3;
+      text-align: center;
+      padding: 32px 20px;
+    }
+
+    footer strong {
+      font-family: "Playfair Display", serif;
+      letter-spacing: 3px;
+      font-size: 19px;
+    }
+
+    footer p {
+      color: #cbb9a5;
+      font-size: 12px;
+      margin-top: 9px;
+    }
+
+    @media(max-width: 800px) {
+      .booking-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-info {
+        padding: 35px;
+      }
+    }
+
+    @media(max-width: 550px) {
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .booking-page {
+        padding: 35px 14px 55px;
+      }
+
+      .booking-card {
+        padding: 27px 20px;
+      }
+
+      .booking-form {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full,
+      .booking-form button,
+      #bookingMessage {
+        grid-column: auto;
+      }
+
+      .booking-info {
+        padding: 30px 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html" class="logo">LORA CAFÉ</a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="booking.html" class="active">Booking</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">A table just for you</div>
+      <h1>Reserve Your Table</h1>
+      <p>Make your next visit a special one.</p>
+    </div>
+  </section>
+
+  <main class="booking-page">
+
+    <div class="booking-layout">
+
+      <aside class="booking-info">
+        <div class="eyebrow">Welcome to LORA</div>
+
+        <h2>Your Perfect Moment Starts Here.</h2>
+
+        <p>
+          Whether it's a quiet coffee, a family gathering,
+          or a special celebration, we're happy to welcome you.
+          Reserve your table and let us take care of the details.
+        </p>
+
+        <div class="info-divider"></div>
+
+        <div class="info-point">
+          <span class="info-icon">✦</span>
+          <div>
+            <strong>Comfortable Experience</strong>
+            <span>Relax in our warm and welcoming atmosphere.</span>
+          </div>
+        </div>
+
+        <div class="info-point">
+          <span class="info-icon">✦</span>
+          <div>
+            <strong>Freshly Prepared</strong>
+            <span>Enjoy carefully prepared coffee, food and desserts.</span>
+          </div>
+        </div>
+
+        <div class="info-point">
+          <span class="info-icon">✦</span>
+          <div>
+            <strong>Easy Reservation</strong>
+            <span>Choose your preferred date, time and party size.</span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="booking-card">
+        <div class="eyebrow">Your table is waiting</div>
+        <h2>Book a Table</h2>
+
+        <p class="booking-description">
+          Complete the details below to request your reservation.
+        </p>
+
+        <form class="booking-form" id="bookingForm">
+
+          <div class="field full">
+            <label for="customerName">Full Name</label>
+            <input
+              type="text"
+              id="customerName"
+              required
+              maxlength="100"
+              autocomplete="name"
+              placeholder="Enter your full name"
+            >
+          </div>
+
+          <div class="field full">
+            <label for="customerEmail">Email Address</label>
+            <input
+              type="email"
+              id="customerEmail"
+              required
+              maxlength="150"
+              autocomplete="email"
+              placeholder="you@example.com"
+            >
+          </div>
+
+          <div class="field">
+            <label for="bookingDate">Reservation Date</label>
+            <input type="date" id="bookingDate" required>
+          </div>
+
+          <div class="field">
+            <label for="bookingTime">Preferred Time</label>
+            <select id="bookingTime" required>
+              <option value="">Select a time</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="11:00 AM">11:00 AM</option>
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="01:00 PM">01:00 PM</option>
+              <option value="02:00 PM">02:00 PM</option>
+              <option value="03:00 PM">03:00 PM</option>
+              <option value="04:00 PM">04:00 PM</option>
+              <option value="05:00 PM">05:00 PM</option>
+              <option value="06:00 PM">06:00 PM</option>
+              <option value="07:00 PM">07:00 PM</option>
+              <option value="08:00 PM">08:00 PM</option>
+              <option value="09:00 PM">09:00 PM</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="guests">Number of Guests</label>
+            <select id="guests" required>
+              <option value="">Select number of guests</option>
+              <option value="1">1 Guest</option>
+              <option value="2">2 Guests</option>
+              <option value="3">3 Guests</option>
+              <option value="4">4 Guests</option>
+              <option value="5">5 Guests</option>
+              <option value="6">6 Guests</option>
+            </select>
+          </div>
+
+          <button type="submit" id="bookingButton">
+            Request Reservation
+          </button>
+
+          <p id="bookingMessage" role="status" aria-live="polite"></p>
+
+        </form>
+
+        <a href="index.html" class="back-link">
+          ← Back to Home
+        </a>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer>
+    <strong>LORA CAFÉ</strong>
+    <p>A little luxury in every moment.</p>
+    <p>© 2026 LORA Café. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const dateInput = document.getElementById("bookingDate");
+    const bookingForm = document.getElementById("bookingForm");
+    const bookingButton = document.getElementById("bookingButton");
+    const bookingMessage = document.getElementById("bookingMessage");
+
+    function getLocalDate() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+    dateInput.min = getLocalDate();
+
+    bookingForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!bookingForm.reportValidity()) return;
+
+      const bookingDate = dateInput.value;
+
+      if (bookingDate < getLocalDate()) {
+        bookingMessage.textContent = "Please choose today or a future date.";
+        bookingMessage.style.color = "#a33";
+        return;
+      }
+
+      bookingButton.disabled = true;
+      bookingButton.textContent = "Sending Reservation...";
+      bookingMessage.textContent = "Please wait while we send your request.";
+      bookingMessage.style.color = "#8b7968";
+
+      try {
+        const response = await fetch("/api/bookings", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            customerName: document.getElementById("customerName").value.trim(),
+            customerEmail: document.getElementById("customerEmail").value.trim(),
+            bookingDate: bookingDate,
+            bookingTime: document.getElementById("bookingTime").value,
+            guests: Number(document.getElementById("guests").value)
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Reservation request failed.");
+        }
+
+        bookingMessage.textContent =
+          "Your reservation request has been received successfully!";
+
+        bookingMessage.style.color = "#39734a";
+        bookingForm.reset();
+
+        dateInput.min = getLocalDate();
+
+      } catch (error) {
+        bookingMessage.textContent = error.message;
+        bookingMessage.style.color = "#a33";
+
+      } finally {
+        bookingButton.disabled = false;
+        bookingButton.textContent = "Request Reservation";
+      }
+    });
+  </script>
+
+</body>
+</html>
